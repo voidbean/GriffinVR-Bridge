@@ -1,0 +1,4 @@
+* text=auto
+overlay/** -text
+*.bsdiff binary
+*.dll binary

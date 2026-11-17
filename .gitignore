@@ -1,0 +1,43 @@
+__pycache__/
+*.py[cod]
+/dist/
+/work/
+/installer/cache/
+/installer/runtime/
+*.zip
+*.pdb
+
+# Local development and installer scratch directories.
+.venv/
+.vs/
+.vscode/
+.idea/
+.codex/
+.agents/
+.gfl-setup-*/
+.mwr-gfl-vr*/
+MWR-GFL-recovered-*/
+
+# Game data, generated assets, binaries and diagnostics.
+*.exe
+*.dll
+!installer/data/liblz4.dll
+*.ff
+*.pak
+*.gsc
+*.gscbin
+*.bin
+*.dmp
+*.log
+players2/
+minidumps/
+diagnose/
+
+# Local credentials and operating system metadata.
+.env
+.env.*
+*.pem
+*.key
+Thumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,6 @@
+// H1 token subset from xensik/gsc-tool, (c) 2026 xensik. GNU GPLv3.
+    { 0xA4D7, "character/character_sp_usmc_james" },
+    { 0xA4D8, "character/character_sp_usmc_ryan" },
+    { 0xA4DB, "character/character_sp_usmc_zach" },
+    { 0xA550, "maps/_load" },
+    { 0xA551, "maps/_loadout" },
