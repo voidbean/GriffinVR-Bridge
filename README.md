@@ -6,7 +6,7 @@
 
 ## 玩家安装
 
-**请下载项目 Releases 中的 `GriffinVR-Bridge-Setup.zip`，不要把仓库的 “Source code” 或 “Download ZIP” 当作安装包。** 玩家安装包自带 Python 和 LZ4，电脑不需要安装 Python，也不需要手动编译或重新打包模型。仓库源码不附带 Python 运行环境，需要按 [BUILD.md](BUILD.md) 先构建玩家包。
+**请下载[项目 Releases](https://github.com/voidbean/GriffinVR-Bridge/releases) 中的 `GriffinVR-Bridge-Setup.zip`，不要把仓库的 “Source code” 或 “Download ZIP” 当作安装包。** 玩家安装包自带 Python 和 LZ4，电脑不需要安装 Python，也不需要手动编译或重新打包模型。仓库源码不附带 Python 运行环境，需要按 [BUILD.md](BUILD.md) 先构建玩家包。
 
 支持范围：Windows 10/11 x64、Steam PC 版《现代战争重制版》单人战役、SteamVR，以及能在 SteamVR 工作的头显与控制器。当前只支持下表中的固定版本，安装器会校验文件内容，不按文件名猜测版本。
 
@@ -22,6 +22,41 @@
 4. 连接头显并启动 SteamVR，双击**游戏目录中的 `Play-GFL-VR.exe`**。
 
 无需手动设置启动参数。启动器默认选择已测试的 OpenVR 后端，并对游戏进程启用 Windows HighQoS。已有的非空玩家配置会保留；尚无配置或配置为空时，安装器写入首次启动预设。高级用户可通过 `H2V_VR_BACKEND` 覆盖后端。
+
+### SteamVR 使用与配置
+
+本补丁默认使用 **SteamVR + OpenVR**。这是 `Play-GFL-VR.exe` 的默认选择，与原版 MWR VR 启动器默认使用 OpenXR 不同。使用这条 OpenVR 路径时，无需把 SteamVR 设为系统的“当前 OpenXR 运行时”。
+
+#### 启动顺序
+
+1. 先连接头显和两个控制器。使用无线或有线串流的头显时，先通过自己的 PC VR 连接方式连上电脑，再进入 SteamVR。
+2. 确认 SteamVR 能识别头显与两个控制器，并能正常追踪头部和手部。
+3. 从**游戏目录**启动 `Play-GFL-VR.exe`。它会自动带上单人战役和少前 Mod 参数；原版游戏或原版 VR 启动项不会自动带上这组参数。
+4. 进入训练关检查画面、角色和持枪操作。初次调整画质或按键时，以这一关作为起点。
+
+#### 画质与控制器
+
+游戏连接 SteamVR 后，在 SteamVR 设置中选择当前应用 **MWR VR**；旧绑定或部分界面也可能显示 **Overlord**。菜单名称可能随 SteamVR 版本和语言略有差异。
+
+| 设置 | 使用方法 |
+| --- | --- |
+| 每应用分辨率 | 在“设置 → 视频 → 每应用视频设置”中选择 MWR VR。建议先以 **100%** 作为调整起点，确认运行流畅后再提高；掉帧时降低。全局分辨率设置也会影响结果，同时留意界面显示的每眼像素尺寸。 |
+| 刷新率 | 先使用头显当前能够稳定运行的刷新率。若要降低刷新率，在头显或串流软件提供的设置中调整，再按软件提示重新连接。没有针对所有设备通用的固定最佳值。 |
+| 手柄绑定 | 在“设置 → 控制器 → 管理控制器绑定”中选择 MWR VR，并选用当前控制器的默认绑定。包内提供 Oculus Touch、Valve Index（Knuckles）和 Vive Controller 的绑定；旧的自定义绑定可能覆盖它们。 |
+| 重新居中 | 默认输入动作包含长按约 1 秒的重新居中操作；具体按键取决于当前控制器绑定。朝向和位置调整好后再开始游玩。 |
+
+以上画质数值是调整起点，不代表已经验证所有头显和手柄组合。默认绑定与自定义绑定的工作方式可参考 [Valve 的 SteamVR Input 说明](https://github.com/ValveSoftware/openvr/wiki/SteamVR-Input)。
+
+#### 以前用过 OpenXR，或启动后没有进入头显
+
+如果你以前设置过 `H2V_VR_BACKEND=openxr`，启动器会保留这个已有覆盖值。要明确走 SteamVR/OpenVR，可在**游戏目录**打开 PowerShell，并执行：
+
+```powershell
+$env:H2V_VR_BACKEND = 'openvr'
+& .\Play-GFL-VR.exe
+```
+
+这只为当前终端启动的游戏指定后端，不修改系统的 OpenXR 运行时。切换后端前先退出游戏。若提示未找到头显，先确认 SteamVR 已能正常追踪设备，再启动游戏；若头显有画面但手柄无响应，检查当前应用的控制器绑定，以及游戏目录中由安装器部署的 `vr_input/` 文件是否完整。
 
 ### 卸载与离线安装
 
